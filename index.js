@@ -1,27 +1,30 @@
 
 // Define functions
+let arrayOfDishes=[];
 async function getMenu() {
   const response = await fetch("https://raw.githubusercontent.com/saksham-accio/f2_contest_3/main/food.json");
   const data = await response.json();
   const menu = document.getElementById("menu");
   data.forEach((item) => {
     menu.innerHTML += `
-      <div>
+      <div class="card-body">
+        <img src="${item.imgSrc}" alt="${item.imageAlt}" width="50%">
         <h2>${item.name}</h2>
-        <p><img src="${item.imgSrc}" alt="${item.imageAlt}" width="50%"></p>
-        <p>${item.price}</p>
+        <p>${item.price}$</p>
       </div>
     `;
+    arrayOfDishes.push(item.name);
   });
 }
 
 function takeOrder() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const burgers = ["Cheeseburger", "Veggie Burger", "Chicken Burger"];
       const order = {
-        burgers: [burgers[Math.floor(Math.random() * 3)], burgers[Math.floor(Math.random() * 3)], burgers[Math.floor(Math.random() * 3)]]
+        burgers: [arrayOfDishes[Math.floor(Math.random() * arrayOfDishes.length)], arrayOfDishes[Math.floor(Math.random() * arrayOfDishes.length)], arrayOfDishes[Math.floor(Math.random() * arrayOfDishes.length)]]
+        
       };
+      console.log(order.burgers);
       resolve(order);
     }, 2500);
   });
